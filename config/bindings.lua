@@ -7,9 +7,11 @@ local mod = {}
 if platform.is_mac then
   mod.SUPER = "SUPER"
   mod.SUPER_REV = "SUPER|CTRL"
+  mod.LEADER = "SUPER|CTRL|SHIFT|OPT"
 elseif platform.is_win or platform.is_linux then
   mod.SUPER = "ALT" -- to not conflict with Windows key shortcuts
   mod.SUPER_REV = "ALT|CTRL"
+  mod.LEADER = "SUPER|CTRL|SHIFT|ALT"
 end
 
 local keys = {
@@ -117,6 +119,32 @@ local keys = {
           window:active_tab():set_title(line)
         end
       end),
+    }),
+  },
+
+  -- 命令行工具快捷键 --
+  -- 按下 mod.LEADER + F 执行 `nnn` 指令
+  {
+    key = "f",
+    mods = mod.LEADER,
+    action = act.SpawnCommandInNewTab({
+      args = { "/opt/homebrew/bin/nnn" },
+    }),
+  },
+  -- 按下 mod.LEADER + T 执行 `ternscp` 指令
+  {
+    key = "t",
+    mods = mod.LEADER,
+    action = act.SpawnCommandInNewTab({
+      args = { "/opt/homebrew/bin/termscp" },
+    }),
+  },
+  -- 按下 mod.LEADER + C 执行 `lazyssh` 指令
+  {
+    key = "c",
+    mods = mod.LEADER,
+    action = act.SpawnCommandInNewTab({
+      args = { "/opt/homebrew/bin/lazyssh" },
     }),
   },
 }
